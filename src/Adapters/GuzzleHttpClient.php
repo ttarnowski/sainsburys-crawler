@@ -1,9 +1,9 @@
 <?php
 
-namespace SainsburysScraper\Adapters;
+namespace SainsburysCrawler\Adapters;
 
 use GuzzleHttp\Client;
-use SainsburysScraper\Interfaces\HttpClient;
+use SainsburysCrawler\Interfaces\HttpClient;
 
 class GuzzleHttpClient implements HttpClient
 {

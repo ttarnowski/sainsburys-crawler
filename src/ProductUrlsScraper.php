@@ -1,9 +1,9 @@
 <?php
 
-namespace SainsburysScraper;
+namespace SainsburysCrawler;
 
-use SainsburysScraper\Interfaces\HtmlScraper;
-use SainsburysScraper\Interfaces\PageScraper;
+use SainsburysCrawler\Interfaces\HtmlScraper;
+use SainsburysCrawler\Interfaces\PageScraper;
 
 class ProductUrlsScraper implements PageScraper
 {

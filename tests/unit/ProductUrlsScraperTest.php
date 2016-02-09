@@ -1,6 +1,6 @@
 <?php
 
-namespace SainsburysScraper;
+namespace SainsburysCrawler;
 
 class ProductUrlsScraperTest extends \PHPUnit_Framework_TestCase
 {

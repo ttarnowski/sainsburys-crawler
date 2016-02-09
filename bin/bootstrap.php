@@ -1,10 +1,10 @@
 <?php
 
-use SainsburysScraper\Adapters\SymfonyDomCrawler;
-use SainsburysScraper\GroceryPageCrawler;
-use SainsburysScraper\HttpClientFactory;
-use SainsburysScraper\ProductDataScraper;
-use SainsburysScraper\ProductUrlsScraper;
+use SainsburysCrawler\Adapters\SymfonyDomCrawler;
+use SainsburysCrawler\GroceryPageCrawler;
+use SainsburysCrawler\HttpClientFactory;
+use SainsburysCrawler\ProductDataScraper;
+use SainsburysCrawler\ProductUrlsScraper;
 
 include dirname(__FILE__) . '/../vendor/autoload.php';
 

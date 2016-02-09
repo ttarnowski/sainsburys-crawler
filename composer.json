@@ -1,7 +1,7 @@
 {
   "autoload": {
     "psr-4": {
-      "SainsburysScraper\\": "src/"
+      "SainsburysCrawler\\": "src/"
     }
   },
   "require": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SainsburysScraper\Adapters;
+namespace SainsburysCrawler\Adapters;
 
 use GuzzleHttp\Client;
 

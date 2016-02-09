@@ -1,4 +1,4 @@
-# Sainsbury's Grocery Scraper
+# Sainsbury's Grocery Crawler
 A console application that scrapes the Sainsbury’s grocery site - Ripe Fruits page and returns a JSON array of all the products on the page.
 
 ## Installation

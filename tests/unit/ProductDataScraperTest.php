@@ -1,8 +1,8 @@
 <?php
 
-namespace SainsburysScraper;
+namespace SainsburysCrawler;
 
-use SainsburysScraper\Adapter\SymfonyDomCrawler;
+use SainsburysCrawler\Adapter\SymfonyDomCrawler;
 
 class ProductDataScraperTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace SainsburysScraper\Adapters;
+namespace SainsburysCrawler\Adapters;
 
-use SainsburysScraper\Interfaces\HtmlScraper;
+use SainsburysCrawler\Interfaces\HtmlScraper;
 use Symfony\Component\DomCrawler\Crawler;
 
 class SymfonyDomCrawler extends Crawler implements HtmlScraper

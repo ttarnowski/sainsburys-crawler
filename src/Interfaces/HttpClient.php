@@ -1,6 +1,6 @@
 <?php
 
-namespace SainsburysScraper\Interfaces;
+namespace SainsburysCrawler\Interfaces;
 
 interface HttpClient
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace SainsburysScraper;
+namespace SainsburysCrawler;
 
-use SainsburysScraper\Interfaces\HttpClient;
+use SainsburysCrawler\Interfaces\HttpClient;
 
 class GroceryPageCrawler
 {
