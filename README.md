@@ -1,5 +1,5 @@
 # Sainsbury's Grocery Crawler
-A console application that scrapes the Sainsbury’s grocery site - Ripe Fruits page and returns a JSON array of all the products on the page.
+A console application that crawls the Sainsbury’s grocery site - Ripe Fruits page and returns a JSON array of all the products on the page.
 
 ## Installation
 
@@ -12,7 +12,7 @@ A console application that scrapes the Sainsbury’s grocery site - Ripe Fruits 
 Run the following command from the project directory to scrap a page and:
 
 1. see results in console: `./bin/crawl_grocery_product_page`
-2. save results in file: `./bin/crawl_grocery_product_page > /your/file/path`
+2. save results to file: `./bin/crawl_grocery_product_page > /your/file/path`
 
 ## Packages
 
