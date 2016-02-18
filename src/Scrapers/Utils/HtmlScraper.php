@@ -11,12 +11,12 @@ interface HtmlScraper
 
     /**
      * @param string $selector A CSS selector
-     * @return HtmlScraper A new instance of Crawler with the filtered list of nodes
+     * @return HtmlScraper A new instance of HtmlScraper with the filtered list of nodes
      */
     public function filter($selector);
 
     /**
-     * @return HtmlScraper A Crawler instance with the children nodes
+     * @return HtmlScraper A HtmlScraper instance with the children nodes
      */
     public function children();
 
