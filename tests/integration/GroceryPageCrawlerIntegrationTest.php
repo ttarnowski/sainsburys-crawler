@@ -2,11 +2,19 @@
 
 namespace SainsburysCrawler;
 
-use SainsburysCrawler\Interfaces\HttpClient;
+use SainsburysCrawler\Clients\HttpClient;
+use SainsburysCrawler\Scrapers\ProductDataScraper;
+use SainsburysCrawler\Scrapers\ProductUrlsScraper;
+use SainsburysCrawler\Scrapers\Utils\SymfonyHtmlScraperAdapter;
+use SainsburysCrawler\Tasks\CrawlGroceryProductListPage;
 
 class GroceryPageCrawlerIntegrationTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var GroceryPageCrawler
+     */
     private $crawler;
+
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -15,7 +23,7 @@ class GroceryPageCrawlerIntegrationTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->httpClient = $this->getMockForAbstractClass(HttpClient::class);
-        $htmlScraper = new Adapters\SymfonyDomCrawler();
+        $htmlScraper = new SymfonyHtmlScraperAdapter();
 
         $this->crawler = new GroceryPageCrawler(
             $this->httpClient,
@@ -37,16 +45,24 @@ class GroceryPageCrawlerIntegrationTest extends \PHPUnit_Framework_TestCase
     public function test_execute_returnsCorrectJsonDataScrapedFromSainsburysGroceryProductListPage()
     {
         $expectedJsonResult = file_get_contents(dirname(__FILE__) . '/expectedResult.json');
-        $mainUrl = 'http://www.sainsburys.co.uk/shop/gb/groceries/fruit-veg/ripe---ready';
+        $mainUrl = CrawlGroceryProductListPage::SAINSBURYS_GROCERY_PRODUCT_LIST_PAGE;
         $this->httpClient
             ->expects($this->any())
             ->method('doRequest')
             ->willReturnMap([
                 [$mainUrl, $this->getProductListFixture()],
-                ['http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-avocado-xl-pinkerton-loose-300g', $this->getProductFixture(1)],
-                ['http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-avocado--ripe---ready-x2', $this->getProductFixture(2)],
-                ['http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-avocados--ripe---ready-x4', $this->getProductFixture(3)],
-                ['http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-conference-pears--ripe---ready-x4-%28minimum%29', $this->getProductFixture(4)],
+                [
+                    'http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/sainsburys-apricot-ripe---ready-320g.html',
+                    $this->getProductFixture(1)
+                ],
+                [
+                    'http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/sainsburys-avocado-xl-pinkerton-loose-300g.html',
+                    $this->getProductFixture(2)
+                ],
+                [
+                    'http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/sainsburys-avocado--ripe---ready-x2.html',
+                    $this->getProductFixture(3)
+                ],
             ]);
 
         $actualJsonResult = $this->crawler->crawl($mainUrl);

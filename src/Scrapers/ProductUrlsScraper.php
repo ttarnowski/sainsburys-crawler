@@ -1,14 +1,14 @@
 <?php
 
-namespace SainsburysCrawler;
+namespace SainsburysCrawler\Scrapers;
 
-use SainsburysCrawler\Interfaces\HtmlScraper;
-use SainsburysCrawler\Interfaces\PageScraper;
+use SainsburysCrawler\Scrapers\Utils\HtmlScraper;
+
+use ArrayIterator;
 
 class ProductUrlsScraper implements PageScraper
 {
-    const PRODUCT_CSS_SELECTOR = '.product';
-    const PRODUCT_URL_CSS_SELECTOR = 'h3 a';
+    const PRODUCT_URLS_CSS_SELECTOR = '.product h3 a';
 
     /**
      * @var HtmlScraper
@@ -24,7 +24,7 @@ class ProductUrlsScraper implements PageScraper
 
     /**
      * @param \DOMNodeList|\DOMNode|array|string|null $html
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     public function scrap($html)
     {
@@ -35,11 +35,11 @@ class ProductUrlsScraper implements PageScraper
     }
 
     /**
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     private function getProductUrls()
     {
-        $urls = new \ArrayIterator();
+        $urls = new ArrayIterator();
 
         foreach ($this->getUrlNodeElements() as $urlElement) {
             $hrefAttributeNode = $urlElement->attributes->getNamedItem('href');
@@ -51,16 +51,12 @@ class ProductUrlsScraper implements PageScraper
     }
 
     /**
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     private function getUrlNodeElements()
     {
-        $productFilter = $this->htmlScraper->filter(self::PRODUCT_CSS_SELECTOR);
+        $productUrlsFilter = $this->htmlScraper->filter(self::PRODUCT_URLS_CSS_SELECTOR);
 
-        $productsCrawler = $productFilter->children();
-
-        $productUrlFilter = $productsCrawler->filter(self::PRODUCT_URL_CSS_SELECTOR);
-
-        return $productUrlFilter->getIterator();
+        return $productUrlsFilter->getIterator();
     }
 }

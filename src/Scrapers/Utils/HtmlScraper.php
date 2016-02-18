@@ -1,6 +1,6 @@
 <?php
 
-namespace SainsburysCrawler\Interfaces;
+namespace SainsburysCrawler\Scrapers\Utils;
 
 interface HtmlScraper
 {

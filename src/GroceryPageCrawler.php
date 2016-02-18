@@ -2,7 +2,11 @@
 
 namespace SainsburysCrawler;
 
-use SainsburysCrawler\Interfaces\HttpClient;
+use SainsburysCrawler\Clients\HttpClient;
+use SainsburysCrawler\Scrapers\ProductDataScraper;
+use SainsburysCrawler\Scrapers\ProductUrlsScraper;
+
+use ArrayIterator;
 
 class GroceryPageCrawler
 {
@@ -46,9 +50,10 @@ class GroceryPageCrawler
     public function crawl($groceryListPageUrl)
     {
         $products = $this->getProducts($groceryListPageUrl);
-        $total = $this->calculateTotalPrice($products);
+        $totalPrice = $this->calculateTotalPrice($products);
+        $parsedTotalPrice = $this->parseTotalPrice($totalPrice);
 
-        return $this->convertToJson($products, $total);
+        return $this->convertToJson($products, $parsedTotalPrice);
     }
 
     /**
@@ -58,6 +63,7 @@ class GroceryPageCrawler
     private function getProducts($groceryListPageUrl)
     {
         $products = [];
+
         foreach ($this->getUrls($groceryListPageUrl) as $url) {
             $productDataPageHtml = $this->httpClient->doRequest($url);
 
@@ -71,7 +77,7 @@ class GroceryPageCrawler
 
     /**
      * @param string $groceryListPageUrl
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     private function getUrls($groceryListPageUrl)
     {
@@ -91,6 +97,15 @@ class GroceryPageCrawler
 
             return $totalPrice;
         });
+    }
+
+    /**
+     * @param float $totalPrice
+     * @return string
+     */
+    private function parseTotalPrice($totalPrice)
+    {
+        return number_format($totalPrice, 2);
     }
 
     /**

@@ -1,8 +1,6 @@
 <?php
 
-namespace SainsburysCrawler;
-
-use SainsburysCrawler\Adapters\GuzzleHttpClient;
+namespace SainsburysCrawler\Clients;
 
 class HttpClientFactoryTest extends \PHPUnit_Framework_TestCase
 {

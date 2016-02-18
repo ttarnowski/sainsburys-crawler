@@ -11,8 +11,8 @@ A console application that crawls the Sainsbury’s grocery site - Ripe Fruits p
 
 Run the following command from the project directory to scrap a page and:
 
-1. see results in console: `./bin/crawl_grocery_product_page`
-2. save results to file: `./bin/crawl_grocery_product_page > /your/file/path`
+1. see results in console: `./bin/crawl.sh`
+2. save results to file: `./bin/crawl.sh > /your/file/path`
 
 ## Packages
 
@@ -28,8 +28,8 @@ Run the following command from the project directory to scrap a page and:
 
 Run the following commands from the project tests directory to:
 
-1. Execute unit tests: `./run_unit_tests`
-2. Execute integration tests `./run_integrations_tests`
+1. Execute unit tests: `./run_unit_tests.sh`
+2. Execute integration tests `./run_integrations_tests.sh`
 
 ## Prerequisites
 

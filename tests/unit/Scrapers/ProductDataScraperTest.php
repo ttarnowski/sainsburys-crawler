@@ -1,8 +1,8 @@
 <?php
 
-namespace SainsburysCrawler;
+namespace SainsburysCrawler\Scrapers;
 
-use SainsburysCrawler\Adapter\SymfonyDomCrawler;
+use SainsburysCrawler\Scrapers\Utils\SymfonyHtmlScraperAdapter;
 
 class ProductDataScraperTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class ProductDataScraperTest extends \PHPUnit_Framework_TestCase
     {
         $this->productPageHtmlFixture = file_get_contents(dirname(__FILE__) . '/fixtures/product.html');
 
-        $htmlScraper = new Adapters\SymfonyDomCrawler();
+        $htmlScraper = new SymfonyHtmlScraperAdapter();
 
         $this->scraper = new ProductDataScraper($htmlScraper);
     }
@@ -35,19 +35,19 @@ EOF;
             'title' => 'Sainsbury\'s Avocado Ripe & Ready XL Loose 300g',
             'size' => $this->calculateExpectedSize(),
             'description' => $expectedDescription,
-            'unit_price' => 1.50,
+            'unit_price' => '1.50',
         ];
 
         $actualProduct = $this->scraper->scrap($this->productPageHtmlFixture);
 
-        $this->assertEquals($expectedProduct, $actualProduct);
+        $this->assertSame($expectedProduct, $actualProduct);
     }
 
     private function calculateExpectedSize() {
         $sizeInBytes = strlen($this->productPageHtmlFixture);
         $sizeInKb = $sizeInBytes / 1024;
 
-        $formattedSize = round($sizeInKb, 2) . 'kb';
+        $formattedSize = round($sizeInKb, 1) . 'kb';
 
         return $formattedSize;
     }

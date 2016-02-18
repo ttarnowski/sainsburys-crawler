@@ -1,6 +1,10 @@
 <?php
 
-namespace SainsburysCrawler;
+namespace SainsburysCrawler\Scrapers;
+
+use SainsburysCrawler\Scrapers\Utils\SymfonyHtmlScraperAdapter;
+
+use ArrayIterator;
 
 class ProductUrlsScraperTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,14 +22,14 @@ class ProductUrlsScraperTest extends \PHPUnit_Framework_TestCase
     {
         $this->productListPageHtmlFixture = file_get_contents(dirname(__FILE__) . '/fixtures/list.html');
 
-        $htmlScraper = new Adapters\SymfonyDomCrawler();
+        $htmlScraper = new SymfonyHtmlScraperAdapter();
 
         $this->scraper = new ProductUrlsScraper($htmlScraper);
     }
 
     public function test_scrap_extractsProductUrlsFromFixtureProperly()
     {
-        $expectedUrls = new \ArrayIterator([
+        $expectedUrls = new ArrayIterator([
             'http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-avocado-xl-pinkerton-loose-300g',
             'http://www.sainsburys.co.uk/shop/gb/groceries/ripe---ready/sainsburys-avocado--ripe---ready-x2'
         ]);

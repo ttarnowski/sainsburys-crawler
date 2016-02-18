@@ -1,13 +1,16 @@
 <?php
 
-namespace SainsburysCrawler;
+namespace SainsburysCrawler\Scrapers;
 
-use SainsburysCrawler\Interfaces\HtmlScraper;
-use SainsburysCrawler\Interfaces\PageScraper;
+use SainsburysCrawler\Scrapers\Utils\HtmlScraper;
 
 class ProductDataScraper implements PageScraper
 {
-    const UNIT_PRICE_PREFIX_LAST_POSITION = 4;
+    const TITLE_CSS_SELECTOR = '.productTitleDescriptionContainer h1';
+    const DESCRIPTION_CSS_SELECTOR = '#information .productText';
+    const UNIT_PRICE_CSS_SELECTOR = '.pricePerUnit';
+
+    const UNIT_PRICE_PREFIX_LAST_POSITION = 2;
 
     /**
      * @var HtmlScraper
@@ -35,7 +38,7 @@ class ProductDataScraper implements PageScraper
         $product = [];
 
         $product['title'] = $this->getTitle();
-        $product['size'] = $this->calculateSizeInKb($html);
+        $product['size'] = $this->getSize($html);
         $product['description'] = $this->getDescription();
         $product['unit_price'] = $this->getUnitPrice();
 
@@ -46,7 +49,7 @@ class ProductDataScraper implements PageScraper
      * @return string
      */
     private function getTitle() {
-        $titleFilter = $this->htmlScraper->filter('.productTitleDescriptionContainer h1');
+        $titleFilter = $this->htmlScraper->filter(self::TITLE_CSS_SELECTOR);
 
         return $titleFilter->text();
     }
@@ -55,17 +58,33 @@ class ProductDataScraper implements PageScraper
      * @param string $html
      * @return string
      */
-    private function calculateSizeInKb($html) {
-        $sizeInKb = strlen($html) / 1024;
+    private function getSize($html) {
+        return $this->parseSizeInKb(
+            $this->calculateSizeInKb($html)
+        );
+    }
 
-        return round($sizeInKb, 2) . 'kb';
+    /**
+     * @param string $html
+     * @return string
+     */
+    private function calculateSizeInKb($html) {
+        return strlen($html) / 1024;
+    }
+
+    /**
+     * @param float $sizeInKb
+     * @return string
+     */
+    private function parseSizeInKb($sizeInKb) {
+        return round($sizeInKb, 1) . 'kb';
     }
 
     /**
      * @return string
      */
     private function getDescription() {
-        $descriptionFilter = $this->htmlScraper->filter('#information .productText');
+        $descriptionFilter = $this->htmlScraper->filter(self::DESCRIPTION_CSS_SELECTOR);
 
         return trim($descriptionFilter->text());
     }
@@ -75,7 +94,9 @@ class ProductDataScraper implements PageScraper
      */
     private function getUnitPrice()
     {
-        $unitPrice = $this->htmlScraper->filter('.pricePerUnit')->getNode(0);
+        $unitPriceNode = $this->htmlScraper->filter(self::UNIT_PRICE_CSS_SELECTOR)->getNode(0);
+
+        $unitPrice = $unitPriceNode->firstChild->nodeValue;
 
         return $this->parseUnitPrice($unitPrice);
     }
@@ -86,10 +107,10 @@ class ProductDataScraper implements PageScraper
      */
     private function parseUnitPrice($unitPrice)
     {
-        $unitPrice = trim($unitPrice->firstChild->nodeValue);
+        $unitPrice = trim($unitPrice);
 
         $unitPrice = substr($unitPrice, self::UNIT_PRICE_PREFIX_LAST_POSITION);
 
-        return round((float) $unitPrice, 2);
+        return number_format($unitPrice, 2);
     }
 }
