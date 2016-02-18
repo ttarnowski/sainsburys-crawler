@@ -3,7 +3,7 @@ A console application that crawls the Sainsbury’s grocery site - Ripe Fruits p
 
 ## Installation
 
-1. Clone [Git repository](https://github.com/ttarnowski/sainsburys-scraper)
+1. Clone [Git repository](https://github.com/ttarnowski/sainsburys-crawler)
 2. `cd` into project root directory
 3. Run `composer install`
 
